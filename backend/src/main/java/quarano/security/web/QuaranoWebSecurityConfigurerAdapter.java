@@ -69,6 +69,7 @@ public class QuaranoWebSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 		httpSecurity.authorizeRequests(it -> {
 			it.mvcMatchers(SWAGGER_UI_WHITELIST).permitAll();
 			it.mvcMatchers("/").permitAll();
+			it.mvcMatchers("/admin/**").access("hasRole('" + RoleType.ROLE_HD_ADMIN + "')");
 			it.mvcMatchers("/docs/**").permitAll();
 			it.mvcMatchers("/h2-console/**").permitAll();
 			it.mvcMatchers("/login").permitAll();
@@ -77,6 +78,7 @@ public class QuaranoWebSecurityConfigurerAdapter extends WebSecurityConfigurerAd
 			it.mvcMatchers("/registration/checkcode/**").permitAll();
 			it.mvcMatchers("/registration/checkusername/**").permitAll();
 			it.mvcMatchers("/frontendtexts").permitAll();
+			it.mvcMatchers("/emailtexts").permitAll();
 			it.mvcMatchers("/hd/accounts/**").access("hasRole('" + RoleType.ROLE_HD_ADMIN + "')");
 			it.mvcMatchers("/hd/**").access(hasAnyRole(RoleType.ROLE_HD_CASE_AGENT, RoleType.ROLE_HD_ADMIN));
 			it.mvcMatchers("/user/**").authenticated();
