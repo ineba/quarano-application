@@ -10,5 +10,6 @@
   "screenshotsFolder": "../../dist/cypress/apps/quarano-frontend-e2e/screenshots",
   "chromeWebSecurity": false,
   "baseUrl": "http://localhost:4200",
-  "viewportHeight": 1000
+  "viewportHeight": 1000,
+  "defaultCommandTimeout": 20000
 }
