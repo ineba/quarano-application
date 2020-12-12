@@ -74,15 +74,14 @@ public class UserController {
 			var trackedCase = person.flatMap(cases::findByTrackedPerson);
 
 			trackedCase
-					.map(TrackedCase::getEnrollment)
+					.map(representations::toEnrollmentRepresentation)
 					.ifPresent(it -> {
 
-						var enrollmentDto = representations.toRepresentation(it);
 						var enrollmentLink = MvcLink.of(caseController.enrollment(null), ENROLLMENT);
 
-						userDto.setEnrollment(enrollmentDto)
+						userDto.setEnrollment(it)
 								.add(enrollmentLink)
-								.addIf(!it.isComplete(),
+								.addIf(!it.getEnrollment().isComplete(),
 										() -> MvcLink.of(caseController.enrollment(null), ENROLLMENT).withRel(IanaLinkRelations.NEXT));
 					});
 
@@ -190,6 +189,7 @@ public class UserController {
 		 * (non-Javadoc)
 		 * @see org.springframework.hateoas.server.RepresentationModelProcessor#process(org.springframework.hateoas.RepresentationModel)
 		 */
+		@Override
 		@SuppressWarnings("null")
 		public QuaranoApiRoot process(QuaranoApiRoot model) {
 

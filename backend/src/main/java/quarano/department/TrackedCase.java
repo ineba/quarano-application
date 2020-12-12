@@ -245,11 +245,15 @@ public class TrackedCase extends QuaranoAggregate<TrackedCase, TrackedCaseIdenti
 		return this;
 	}
 
-	public TrackedCase report(TestResult testResult) {
+	public TrackedCase report(TestResult testResult, boolean executeContactRetroForContactCases) {
+		 
+ 		if (this.type != CaseType.INDEX && testResult.isInfected()) {
+ 			registerEvent(CaseConvertedToIndex.of(this));
 
-		if (this.type != CaseType.INDEX && testResult.isInfected()) {
-			registerEvent(CaseConvertedToIndex.of(this));
-		}
+			if (!executeContactRetroForContactCases) {
+				reopenEnrollment();
+			}
+ 		}
 
 		this.testResult = testResult;
 		this.type = testResult.isInfected() ? CaseType.INDEX : type;
