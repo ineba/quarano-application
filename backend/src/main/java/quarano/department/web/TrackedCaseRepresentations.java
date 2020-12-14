@@ -530,7 +530,8 @@ public class TrackedCaseRepresentations implements ExternalTrackedCaseRepresenta
 
 	@Data
 	static class CommentInput {
-		@Textual String comment;
+		@Textual
+		String comment;
 	}
 
 	static class ValidationGroups {
@@ -573,14 +574,13 @@ public class TrackedCaseRepresentations implements ExternalTrackedCaseRepresenta
 
 			var enrollmentLink = MvcLink.of(caseController.enrollment(null), SELF);
 			var questionnareLink = MvcLink.of(caseController.addQuestionaire(null, null, null), QUESTIONNAIRE);
-			var reopenLink = MvcLink.of(caseController.reopenEnrollment(null), REOPEN);
 			var detailsLink = MvcLink.of(trackingController.enrollmentOverview(null), DETAILS);
 			var encountersLink = MvcLink.of(trackingController.getEncounters(null), ENCOUNTERS);
 
 			var links = Links.NONE.and(enrollmentLink, detailsLink);
 
 			if (enrollment.isComplete()) {
-				links = links.and(questionnareLink, encountersLink, reopenLink);
+				links = links.and(questionnareLink, encountersLink);
 			} else if (enrollment.isCompletedQuestionnaire()) {
 
 				links = links.and(questionnareLink, encountersLink, questionnareLink.withRel(PREV),
@@ -625,13 +625,19 @@ public class TrackedCaseRepresentations implements ExternalTrackedCaseRepresenta
 	@EqualsAndHashCode(callSuper = true)
 	static class InstitutionDto extends RepresentationModel<InstitutionDto> {
 
-		@Pattern(regexp = Strings.NAMES) String name;
+		@Pattern(regexp = Strings.NAMES)
+		String name;
 		String department;
-		@Pattern(regexp = Strings.STREET) String street;
-		@Pattern(regexp = Strings.CITY) String city;
-		@Pattern(regexp = ZipCode.PATTERN) String zipCode;
-		@Pattern(regexp = PhoneNumber.PATTERN) String fax, phone;
-		@Email String email;
+		@Pattern(regexp = Strings.STREET)
+		String street;
+		@Pattern(regexp = Strings.CITY)
+		String city;
+		@Pattern(regexp = ZipCode.PATTERN)
+		String zipCode;
+		@Pattern(regexp = PhoneNumber.PATTERN)
+		String fax, phone;
+		@Email
+		String email;
 
 		private static InstitutionDto of(HealthDepartment rkiDepartment) {
 
