@@ -26,7 +26,7 @@ export class BadRequestService {
         }
       });
       if (!handled) {
-        this.translatedSnackbar.error('BAD_REQUEST.UNGÜLTIGE_WERTE').subscribe();
+        this.translatedSnackbar.error(error.errors || 'BAD_REQUEST.UNGÜLTIGE_WERTE').subscribe();
       }
     }
 
